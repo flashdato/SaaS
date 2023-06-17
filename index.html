@@ -73,6 +73,14 @@
             border-bottom: 1px solid #ccc;
         }
     
+        input {
+            width: 290px;
+            padding: 10px;
+            height: 40px;
+        }
+        form{
+            padding-left: 200px;
+        }
         table th {
             background-color: #4CAF50;
             color: #fff;
@@ -146,14 +154,6 @@
         var entryData = [date, bank, operation, currency, value.toFixed(2), file];
 
     }
-   
-
-function handleClientLoad() {
-  gapi.load('client', initClient);
-}
-
-// Call handleClientLoad() when loading the Google Sheets API client library
-handleClientLoad();
 
 </script>
 </head>
@@ -178,10 +178,17 @@ handleClientLoad();
     </table>
     <form 
   method="POST" 
-  action="YOUR_WEBAPP_URL"
+  method="POST" 
+  method="POST" 
+  method="POST" 
+  method="POST" 
+  action="https://script.google.com/macros/s/AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw/exec"
 >
   <input name="Bank" type="Bank" placeholder="Bank" required>
   <input name="Operation" type="Operation" placeholder="Operation" required>
+  <input name="Currency" type="Currency" placeholder="Currency" required>
+  <input name="Value" type="Value" placeholder="Value" required>
+  <input name="File" type="File" placeholder="File" required>
   <button type="submit">Send</button>
 </form>
 </body>
