@@ -149,7 +149,7 @@
     }
 
     function sendDataToGoogleSheets(entryData) {
-  var netlifyUrl = 'https://snazzy-sunflower-771f62.netlify.app'; // Remove the trailing slash from the URL
+  var googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw/exec'; // Replace with your Google Sheets URL
 
   var data = {
     Bank: entryData[1],
@@ -161,7 +161,7 @@
   };
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', netlifyUrl + '/proxy', true); // Append '/proxy' to the URL for proxying
+  xhr.open('POST', googleSheetsUrl, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   xhr.onreadystatechange = function() {
@@ -176,6 +176,18 @@
 
   xhr.send(JSON.stringify(data));
 }
+function doPost(e) {
+  var ss = SpreadsheetApp.openById('AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw'); // Replace with your Google Sheets spreadsheet ID
+  var sheet = ss.getSheetByName('Sheet1'); // Replace with the name of your sheet
+
+  var data = JSON.parse(e.postData.contents);
+  var row = [data.Date, data.Bank, data.Operation, data.Currency, data.Value, data.File];
+
+  sheet.appendRow(row);
+
+  return ContentService.createTextOutput('Success');
+}
+
 </script>
 </head>
 <body>
