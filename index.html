@@ -149,7 +149,7 @@
     }
 
     function sendDataToGoogleSheets(entryData) {
-  var googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw/exec'; // Replace with the URL of your Google Sheets endpoint
+  var netlifyUrl = 'https://snazzy-sunflower-771f62.netlify.app'; // Remove the trailing slash from the URL
 
   var data = {
     Bank: entryData[1],
@@ -160,25 +160,22 @@
     File: entryData[5]
   };
 
-  fetch(googleSheetsUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (response.ok) {
-      console.log('Data sent successfully');
-    } else {
-      console.error('Error:', response.statusText);
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', netlifyUrl + '/proxy', true); // Append '/proxy' to the URL for proxying
+  xhr.setRequestHeader('Content-Type', 'application/json');
 
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        console.log('Data sent successfully');
+      } else {
+        console.error('Error:', xhr.responseText);
+      }
+    }
+  };
+
+  xhr.send(JSON.stringify(data));
+}
 </script>
 </head>
 <body>
