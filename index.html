@@ -147,19 +147,16 @@
 
         sendDataToGoogleSheets(entryData);
     }
-
-    // Replace the function sendDataToGoogleSheets() with the modified code
-function sendDataToGoogleSheets(entryData) {
-  var spreadsheetId = 'AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw'; // Replace with your Google Sheets spreadsheet ID
-  var range = 'Sheet1!A1:G1000'; // Replace with the range where you want to append the data
+    function sendDataToGoogleSheets(entryData) {
+  var googleSheetsUrl = 'https://sheets.googleapis.com/v4/spreadsheets/AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw/values/A1:G100?key=AIzaSyB_yeCwNZYJ7ZdaYK89rDIuWsGCv6Wt-qc';
 
   var data = {
-    values: [entryData] // Wrap the entryData in an array to match the structure expected by the API
+    values: [[entryData[0], entryData[1], entryData[2], entryData[3], entryData[4], entryData[5]]]
   };
 
   gapi.client.sheets.spreadsheets.values.append({
-    spreadsheetId: spreadsheetId,
-    range: range,
+    spreadsheetId: 'AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw',
+    range: 'Sheet1',
     valueInputOption: 'USER_ENTERED',
     resource: data
   }).then(function(response) {
@@ -169,15 +166,27 @@ function sendDataToGoogleSheets(entryData) {
   });
 }
 
-// Replace the function doPost() with the modified code
-function doPost(e) {
-  var data = JSON.parse(e.postData.contents);
-  var row = [data.Date, data.Bank, data.Operation, data.Currency, data.Value, data.File];
-
-  sendDataToGoogleSheets(row);
-
-  return ContentService.createTextOutput('Success');
+function initClient() {
+  gapi.client.init({
+    clientId: '978913242858-6qm9i7haodp57ed7f876b2tfmapgke9q.apps.googleusercontent.com',
+    apiKey: 'AIzaSyB_yeCwNZYJ7ZdaYK89rDIuWsGCv6Wt-qc',
+    discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+    scope: 'https://www.googleapis.com/auth/spreadsheets'
+  }).then(function() {
+    // API initialization succeeded
+    console.log('API initialized');
+  }, function(error) {
+    // API initialization failed
+    console.error('API initialization error:', error);
+  });
 }
+
+function handleClientLoad() {
+  gapi.load('client', initClient);
+}
+
+// Call handleClientLoad() when loading the Google Sheets API client library
+handleClientLoad();
 
 </script>
 </head>
