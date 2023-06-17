@@ -149,8 +149,8 @@
     }
 
     function sendDataToGoogleSheets(entryData) {
-  var proxyUrl = 'https://snazzy-sunflower-771f62.netlify.app/proxy'; // Replace with the URL of your proxy server hosted on Netlify
-  
+  var netlifyUrl = 'https://snazzy-sunflower-771f62.netlify.app'; // Remove the trailing slash from the URL
+
   var data = {
     Bank: entryData[1],
     Operation: entryData[2],
@@ -161,7 +161,7 @@
   };
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', proxyUrl, true);
+  xhr.open('POST', netlifyUrl + '/proxy', true); // Append '/proxy' to the URL for proxying
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   xhr.onreadystatechange = function() {
@@ -176,7 +176,6 @@
 
   xhr.send(JSON.stringify(data));
 }
-
 </script>
 </head>
 <body>
