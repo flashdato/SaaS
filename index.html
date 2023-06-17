@@ -148,42 +148,33 @@
         sendDataToGoogleSheets(entryData);
     }
 
-    function sendDataToGoogleSheets(entryData) {
-  var googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw/exec'; // Replace with your Google Sheets URL
+    // Replace the function sendDataToGoogleSheets() with the modified code
+function sendDataToGoogleSheets(entryData) {
+  var spreadsheetId = 'AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw'; // Replace with your Google Sheets spreadsheet ID
+  var range = 'Sheet1!A1:G1000'; // Replace with the range where you want to append the data
 
   var data = {
-    Bank: entryData[1],
-    Operation: entryData[2],
-    Date: entryData[0],
-    Currency: entryData[3],
-    Value: entryData[4],
-    File: entryData[5]
+    values: [entryData] // Wrap the entryData in an array to match the structure expected by the API
   };
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', googleSheetsUrl, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        console.log('Data sent successfully');
-      } else {
-        console.error('Error:', xhr.responseText);
-      }
-    }
-  };
-
-  xhr.send(JSON.stringify(data));
+  gapi.client.sheets.spreadsheets.values.append({
+    spreadsheetId: spreadsheetId,
+    range: range,
+    valueInputOption: 'USER_ENTERED',
+    resource: data
+  }).then(function(response) {
+    console.log('Data sent successfully');
+  }, function(error) {
+    console.error('Error:', error.result.error.message);
+  });
 }
-function doPost(e) {
-  var ss = SpreadsheetApp.openById('AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw'); // Replace with your Google Sheets spreadsheet ID
-  var sheet = ss.getSheetByName('Sheet1'); // Replace with the name of your sheet
 
+// Replace the function doPost() with the modified code
+function doPost(e) {
   var data = JSON.parse(e.postData.contents);
   var row = [data.Date, data.Bank, data.Operation, data.Currency, data.Value, data.File];
 
-  sheet.appendRow(row);
+  sendDataToGoogleSheets(row);
 
   return ContentService.createTextOutput('Success');
 }
