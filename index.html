@@ -145,41 +145,8 @@
 
         var entryData = [date, bank, operation, currency, value.toFixed(2), file];
 
-        sendDataToGoogleSheets(entryData);
     }
-    function sendDataToGoogleSheets(entryData) {
-  var googleSheetsUrl = 'https://sheets.googleapis.com/v4/spreadsheets/AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw/values/A1:G100?key=AIzaSyB_yeCwNZYJ7ZdaYK89rDIuWsGCv6Wt-qc';
-
-  var data = {
-    values: [[entryData[0], entryData[1], entryData[2], entryData[3], entryData[4], entryData[5]]]
-  };
-
-  gapi.client.sheets.spreadsheets.values.append({
-    spreadsheetId: 'AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw',
-    range: 'Sheet1',
-    valueInputOption: 'USER_ENTERED',
-    resource: data
-  }).then(function(response) {
-    console.log('Data sent successfully');
-  }, function(error) {
-    console.error('Error:', error.result.error.message);
-  });
-}
-
-function initClient() {
-  gapi.client.init({
-    clientId: '978913242858-6qm9i7haodp57ed7f876b2tfmapgke9q.apps.googleusercontent.com',
-    apiKey: 'AIzaSyB_yeCwNZYJ7ZdaYK89rDIuWsGCv6Wt-qc',
-    discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-    scope: 'https://www.googleapis.com/auth/spreadsheets'
-  }).then(function() {
-    // API initialization succeeded
-    console.log('API initialized');
-  }, function(error) {
-    // API initialization failed
-    console.error('API initialization error:', error);
-  });
-}
+   
 
 function handleClientLoad() {
   gapi.load('client', initClient);
@@ -209,5 +176,13 @@ handleClientLoad();
             <th>File</th>
         </tr>
     </table>
+    <form 
+  method="POST" 
+  action="YOUR_WEBAPP_URL"
+>
+  <input name="Bank" type="Bank" placeholder="Bank" required>
+  <input name="Operation" type="Operation" placeholder="Operation" required>
+  <button type="submit">Send</button>
+</form>
 </body>
 </html>
