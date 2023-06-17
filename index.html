@@ -149,9 +149,8 @@
     }
 
     function sendDataToGoogleSheets(entryData) {
-  var proxyUrl = 'http://localhost:3000'; // Replace with the URL of your proxy server
-  var googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbxr2VgE1aBRoBgzdruq0AtulIkYRykacK7ISOMi3rWMl6yCZCED-iCXhAjEjvUkNtMrPw/exec';
-
+  var netlifyUrl = 'https://snazzy-sunflower-771f62.netlify.app/'; // Replace with the URL of your Netlify website
+  
   var data = {
     Bank: entryData[1],
     Operation: entryData[2],
@@ -162,7 +161,7 @@
   };
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', proxyUrl, true);
+  xhr.open('POST', netlifyUrl, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   xhr.onreadystatechange = function() {
@@ -175,7 +174,7 @@
     }
   };
 
-  xhr.send(JSON.stringify({ url: googleAppsScriptUrl, data: data }));
+  xhr.send(JSON.stringify(data));
 }
 </script>
 </head>
