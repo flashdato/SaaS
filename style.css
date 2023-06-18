@@ -123,7 +123,10 @@ table th {
   }
 }
 @media screen and (min-width: 601px) and (max-width: 1024px) {
-  
+   /* Hide the data-table */
+   #data-table {
+    display: none;
+  }
 /* Styles for screens with width between 601px and 1024px */
 body {
 padding: 20px;
@@ -136,6 +139,7 @@ max-width: 800px;
 
 @media screen and (min-width: 1025px) {
 /* Styles for screens with width greater than 1024px */
+
 body {
 padding: 40px;
 }
