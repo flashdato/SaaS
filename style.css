@@ -80,50 +80,50 @@ table th {
 }
 /* Media queries for responsiveness */
 @media screen and (max-width: 600px) {
-    table {
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-  
-    table thead,
-    table tbody,
-    table tr,
-    table th,
-    table td {
-      display: block;
-    }
-  
-    table thead tr {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
-    }
-  
-    table tbody tr {
-      border-bottom: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-  
-    table td {
-      border: none;
-      position: relative;
-      padding-left: 50%;
-    }
-  
-    table td:before {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      width: 45%;
-      padding-right: 10px;
-      white-space: nowrap;
-      content: attr(data-label);
-      font-weight: bold;
-    }
+
+  /* Hide the data-table */
+  #data-table {
+    display: none;
   }
 
+  table thead,
+  table tbody,
+  table tr,
+  table th,
+  table td {
+    display: block;
+  }
+
+  table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  table tbody tr {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  table td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label);
+    font-weight: bold;
+  }
+}
 @media screen and (min-width: 601px) and (max-width: 1024px) {
+  
 /* Styles for screens with width between 601px and 1024px */
 body {
 padding: 20px;
