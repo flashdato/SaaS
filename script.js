@@ -1,4 +1,7 @@
 function addEntry() {
+
+    alert('Data added successfully.');
+
     var message = document.getElementById('message').value;
 
     var bank = message.split(' ')[0] + ' ' + message.split(' ')[1];
